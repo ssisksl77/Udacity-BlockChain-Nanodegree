@@ -42,7 +42,6 @@ class BlockController {
      */
     postNewBlock() {
         this.app.post("/api/block", async (req, res) => {
-            // body
             const {data} = req.body;
             let resData;
             if (data) {
@@ -57,16 +56,16 @@ class BlockController {
     /**
      * Help method to inizialized Mock dataset, adds 10 test blocks to the blocks array
      */
-    async initializeMockData() {
-
-        if(this.blocks.length === 0){
-            for (let index = 0; index < 10; index++) {
-                let blockAux = new B.Block(`Test Data #${index}`);
-                blockAux.height = index;
-                blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
-            }
-        }
-    }
+    // async initializeMockData() {
+        
+    //     if(this.blocks.length === 0){
+    //         for (let index = 0; index < 10; index++) {
+    //             let blockAux = new B.Block(`Test Data #${index}`);
+    //             blockAux.height = index;
+    //             blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
+    //         }
+    //     }
+    // }
 }
 
 /**
