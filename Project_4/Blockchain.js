@@ -6,9 +6,8 @@ class Blockchain {
 	async addBlock(block) {
 	    let res;
 	    try {
-	        //console.log(`hash=${this.hash}, height=${this.height}, body=${this.body}, time=${this.time}`);
 	        let h = await this.getBlockMaxHeight();
-	        console.log('h=',h);
+	        console.log('h =',h);
 	        block.height = h;
 	        if (block.height > 0) {
 	            let previousBlock = await this.getBlockByHeight(h - 1);

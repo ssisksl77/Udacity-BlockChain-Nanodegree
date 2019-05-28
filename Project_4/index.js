@@ -38,7 +38,10 @@ class BlockAPI {
      * Initilization of all the controllers
      */
 	initControllers() {
-		require("./BlockController.js")(this.app);
+		const mempool = require("./Mempool.js");
+
+		require("./BlockController.js")(this.app, mempool);
+		require("./MempoolController.js")(this.app, mempool);
 	}
 
     /**
@@ -50,7 +53,6 @@ class BlockAPI {
 			console.log(`Server Listening for port: ${self.app.get("port")}`);
 		});
 	}
-
 }
 
 new BlockAPI();

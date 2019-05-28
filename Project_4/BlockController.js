@@ -11,8 +11,9 @@ class BlockController {
      * Constructor to create a new BlockController, you need to initialize here all your endpoints
      * @param {*} app 
      */
-    constructor(app) {
+    constructor(app, mempool) {
         this.app = app;
+        this.mempool = mempool;
         this.getBlockByIndex();
         this.postNewBlock();
     }
