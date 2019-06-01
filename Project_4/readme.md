@@ -34,4 +34,12 @@ Add Block
 ```
 curl -X GET localhost:8000/api/block/0
 >> {"hash":"140e4decf877ddee359dfda95dfd6fc7845696075bd99291c61e793b4e6aa8c5","height":0,"body":"This is My Post Block Test","time":"1558530905","previousBlockHash":""}
+
+Add RequestBlock
+curl -X POST localhost:8000/requestValidation -H "Content-Type: application/x-www-form-urlencoded" -d "address=19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL"
+{"walletAddress":"19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL","requestTimeStamp":"1559373026","message":"19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL:1559373026:starRegistry","validationWindow":300}
+
+Validate Request
+curl -X POST localhost:8000/message-signature/validate -H "Content-Type: application/x-www-form-urlencoded" -d "address=19xaiMqayaNrn3x7AjV5cU4Mk5f5prRVpL&signature=H8K4+1MvyJo9tcr2YN2KejwvX1oqneyCH+fsUL1z1WBdWmswB9bijeFfOfMqK68kQ5RO6ZxhomoXQG3fkLaBl+Q="
+
 ```

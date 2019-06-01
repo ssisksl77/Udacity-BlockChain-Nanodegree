@@ -39,7 +39,6 @@ class BlockAPI {
      */
 	initControllers() {
 		const mempool = require("./Mempool.js");
-
 		require("./BlockController.js")(this.app, mempool);
 		require("./MempoolController.js")(this.app, mempool);
 	}

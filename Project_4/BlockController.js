@@ -53,6 +53,27 @@ class BlockController {
         });
     }
 
+    /*
+     * add new star block data.
+     * 1. verify address data.
+     * 2. save star data
+     * 3. return result.
+     */
+    addNewStar() {
+        this.app.post("/block", async (req, res) => {
+            const {address, star} = req.body;
+            if(address && star) {
+                let res = this.mempool.getRequestByWalletAddress(address);
+                console.log('you have it!!!', res);
+                console.log(star);
+                if(res) {
+                    const {ra, dec, mag, cen, story} = star;
+//                    console.log()
+                }
+            }
+        });
+    }
+
     /**
      * Help method to inizialized Mock dataset, adds 10 test blocks to the blocks array
      */

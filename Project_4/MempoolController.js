@@ -1,22 +1,56 @@
+const each = require('lodash/each');
+const map = require('lodash/map');
+const _ = require('lodash/wrapperLodash');
+
 const BlockReq = require('./BlockRequest');
 
 class MempoolController {
 	constructor(app, mempool) {
 		this.app = app;
 		this.mempool = mempool;
+		
 		this.requestValidation();
+		this.validateSignature();
 	}
 
 	requestValidation() {
-		this.app.post('/requestValidation', (req, res) => {
-			if(req.body.address) {
-				let blockReq = new BlockReq(req.body.address);
-				let resJson = await this.mempool.addWallet(blockReq);
-				res.send(resJson);
-			} else {
-				res.status(500).send('include address.');
-			}
-		});
+		//const self = this;
+		try {
+			this.app.post('/requestValidation', async (req, res) => {
+				if(req.body.address) {
+					let resJson = await this.mempool.addRequest(new BlockReq(req.body.address));
+					
+					if (resJson) {
+						res.status(200).send(resJson);
+					} else {
+						res.status(500).send("Error happend on requestValidation");
+					}
+				} else {
+					res.status(500).send('include address.');
+				}
+			});
+		} catch(err) {
+			console.log(err);
+		}
+	}
+
+	validateSignature() {
+		try {
+			this.app.post('/message-signature/validate', async (req, res) => {
+				if(req.body.address && req.body.signature) {
+					let resJson = await this.mempool.validateRequest(req.body.address, req.body.signature)
+					
+					if (resJson) {
+						res.status(200).send(resJson);
+					} else {
+						res.status(200).send('no matching address');
+					}
+				}
+			});
+
+		} catch(err) {
+			console.log(err);
+		}
 	}
 }
 
@@ -25,4 +59,4 @@ class MempoolController {
  * eleminate new keyword
  * @param {*} app 
  */
-module.exports = (app) => { return new MempoolController(app);}
+module.exports = (app, mempool) => { return new MempoolController(app, mempool);}
