@@ -29,7 +29,9 @@ curl -X POST localhost:8000/requestValidation -H "Content-Type: application/x-ww
 ```
 
 2. Blockchain ID message signature validation
-![Screenshot](image/screenshot.png)
+![Screenshot](./image/screenshot.png)
 
+curl -X POST localhost:8000/localhost:8000/message-signature/validate -H "Content-Type: application/x-www-form-urlencoded" \
+-d "address=17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d&signature=IHNXDwgI4O/PiLib7Vw0gMPtcnJTjrcii4/1hMD56iT5H50cv6paqORrMw9ptCJ0eusrWr2ADVh7NuRqFj7gIzU="
 
 ```
