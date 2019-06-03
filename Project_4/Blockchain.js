@@ -39,6 +39,18 @@ class Blockchain {
 	    block = JSON.parse(block);
 	    return block;
 	}
+
+	async getBlockByWalletAddress(hash) {
+		let block;
+		try {
+			block = await db.getLevelDBDataByHash(hash);
+		} catch(err) {
+			console.log(err);
+			console.log(block);
+		}
+
+		return block;
+	}
 }
 
 module.exports = Blockchain;

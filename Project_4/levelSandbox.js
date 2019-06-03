@@ -50,7 +50,23 @@ function addDataToLevelDB(value) {
   });
 }
 
+function getLevelDBDataByHash(hash) {
+  let block = undefined;
+  return new Promise(function getBlockByHash(resolve, reject) {
+    db.createReadStream()
+      .on('data', (data) => {
+        let value = JSON.parse(data.value);
+        if(value.hash === hash) { 
+          block = value; 
+        }
+      })
+      .on('error', (err) => { reject(err); })
+      .on('close', () => { resolve(block); });
+  }); 
+}
+
 module.exports.addLevelDBData = addLevelDBData;
 module.exports.getLevelDBData = getLevelDBData;
 module.exports.getBlockHeight = getBlockHeight;
 module.exports.addDataToLevelDB = addDataToLevelDB;
+module.exports.getLevelDBDataByHash = getLevelDBDataByHash;

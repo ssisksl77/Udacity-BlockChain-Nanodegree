@@ -44,3 +44,8 @@ Result Should be
 
 ![Screenshot3](https://github.com/ssisksl77/Udacity-BlockChain-Nanodegree/blob/master/Project_4/image/addStarResult.png)
 
+### 4. getBlock By Hash
+```
+curl -X GET http://localhost:8000/stars/hash:c81fafd3edb6b0f5a23ed79bed993339d3307cddebd0636a9f4a55fec30b845d
+>> {"hash":"c81fafd3edb6b0f5a23ed79bed993339d3307cddebd0636a9f4a55fec30b845d","height":7,"body":{"address":"17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d","star":{"dec":"68° 52' 56.9","ra":"16h 29m 1.0s","story":"34363666373536653634323037333734363137323230373537333639366536373230363837343734373037333361326632663737373737373265363736663666363736633635326536333666366432663733366237393266","storyDecoded":"466f756e642073746172207573696e672068747470733a2f2f7777772e676f6f676c652e636f6d2f736b792f"}},"time":"1559564829","previousBlockHash":"2118e8e2d6a89074d0296619c5482169bd73b4b447eb774be97f829c87f82137"}
+```

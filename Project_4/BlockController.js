@@ -21,6 +21,7 @@ class BlockController {
         this.getBlockByIndex();
         this.postNewBlock();
         this.addNewStar();
+        this.getBlockByWalletAddress();
     }
 
     /**
@@ -83,6 +84,25 @@ class BlockController {
                 } else {
                     res.status(500).json('request is not valid');
                 }
+            }
+        });
+    }
+
+    getBlockByWalletAddress() {
+        const self = this;
+        this.app.get("/stars/hash::hash", async (req, res) => {
+            if(req.params.hash) {
+                const hash = req.params.hash;
+                let block = await chain.getBlockByWalletAddress(hash);
+
+                if (block) {
+                    block.body.star.storyDecoded = hex2ascii(block.body.star.story);
+                    res.json(block);
+                } else {
+                    res.status(500).json('can not found a block by hash');
+                }
+            } else {
+                res.json('no hash value');
             }
         });
     }
