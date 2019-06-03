@@ -27,11 +27,17 @@ curl -X POST localhost:8000/requestValidation -H "Content-Type: application/x-ww
 >> {"walletAddress":"17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d","requestTimeStamp":"1559565922","message":"17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d:1559565922:starRegistry","validationWindow":300}
 
 ```
-
 2. Blockchain ID message signature validation
-![Screenshot](https://github.com/ssisksl77/Udacity-BlockChain-Nanodegree/blob/master/Project_4/image/electrum.png)
-
-curl -X POST localhost:8000/localhost:8000/message-signature/validate -H "Content-Type: application/x-www-form-urlencoded" \
--d "address=17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d&signature=IHNXDwgI4O/PiLib7Vw0gMPtcnJTjrcii4/1hMD56iT5H50cv6paqORrMw9ptCJ0eusrWr2ADVh7NuRqFj7gIzU="
-
+![Screenshot1](https://github.com/ssisksl77/Udacity-BlockChain-Nanodegree/blob/master/Project_4/image/electrum.png)
 ```
+curl -X POST localhost:8000/message-signature/validate -H "Content-Type: application/x-www-form-urlencoded" \
+-d "address=17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d&signature=H4+2FvyQZD5dwaguGBWjlyMhKUnQjRuRqZTgbRqOFde2MEs7G6vjTkOprJ5r/GsHSYQiOxHpgUSRKidiZlqdrsk="
+>> {"walletAddress":"17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d","requestTimeStamp":"1559567338","message":"17uaMkikvz8nnphnSTnTgMmGAAq6K2HG6d:1559567338:starRegistry","validationWindow":179}
+```
+
+3. add Star Data
+![Screenshot2](https://github.com/ssisksl77/Udacity-BlockChain-Nanodegree/blob/master/Project_4/image/addStar.png)
+
+Result Should be
+![Screenshot3](https://github.com/ssisksl77/Udacity-BlockChain-Nanodegree/blob/master/Project_4/image/addStarResult.png)
+
