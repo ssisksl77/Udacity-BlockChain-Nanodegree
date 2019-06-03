@@ -1,7 +1,11 @@
 const SHA256 = require('crypto-js/sha256');
+const hex2ascii = require('hex2ascii');
+
 const B = require('./Block.js');
-const Blockchain = require('./Blockchain');
+const Blockchain = require('./Blockchain.js');
+const VerifyAddressRequest = new require('./VerifyAddressRequest.js');
 const chain = new Blockchain();
+
 /**
  * Controller Definition to encapsulate routes to work with blocks
  */
@@ -16,6 +20,7 @@ class BlockController {
         this.mempool = mempool;
         this.getBlockByIndex();
         this.postNewBlock();
+        this.addNewStar();
     }
 
     /**
@@ -60,37 +65,31 @@ class BlockController {
      * 3. return result.
      */
     addNewStar() {
+        const self = this;
+
         this.app.post("/block", async (req, res) => {
             const {address, star} = req.body;
             if(address && star) {
-                let res = this.mempool.getRequestByWalletAddress(address);
-                console.log('you have it!!!', res);
-                console.log(star);
-                if(res) {
-                    const {ra, dec, mag, cen, story} = star;
-//                    console.log()
+                let mempoolValid = self.mempool.getRequestByWalletAddress(address);
+                let validReq = new VerifyAddressRequest(address, star);
+                // console.log(`mempoolValid ${mempoolValid}`);
+                // mempoolValid
+                if(validReq.get()) {
+                    let resData = await chain.addBlock(new B.Block(validReq.get()));
+                    resData.body.star.storyDecoded = hex2ascii(resData.body.star.story);
+                    console.log(resData.body.star.story);
+                    console.log(hex2ascii(resData.body.star.story));
+                    res.json(resData);
+                } else {
+                    res.status(500).json('request is not valid');
                 }
             }
         });
     }
-
-    /**
-     * Help method to inizialized Mock dataset, adds 10 test blocks to the blocks array
-     */
-    // async initializeMockData() {
-        
-    //     if(this.blocks.length === 0){
-    //         for (let index = 0; index < 10; index++) {
-    //             let blockAux = new B.Block(`Test Data #${index}`);
-    //             blockAux.height = index;
-    //             blockAux.hash = SHA256(JSON.stringify(blockAux)).toString();
-    //         }
-    //     }
-    // }
 }
 
 /**
  * Exporting the BlockController class
  * @param {*} app 
  */
-module.exports = (app) => { return new BlockController(app);}
+module.exports = (app, mempool) => { return new BlockController(app, mempool);}

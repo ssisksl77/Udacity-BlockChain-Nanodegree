@@ -24,16 +24,13 @@ class Mempool {
 		}
 	}
 
-	async validateRequest(address, signature) {
+	async validateRequestByWallet(address, signature) {
 		let wallet = this.getRequestByWalletAddress(address);
 		const self = this;
 		try {
 			if (wallet) {
-
-				//console.log(`before verify=${signature}`);
 				const verified = bitcoinMessage.verify(wallet.message, address, signature);
 				let reqValid = new RequestValid(wallet, verified);
-				console.log(reqValid);
 				if(verified) {
 					this.mempoolValid[reqValid.status.walletAddress] = reqValid;
 					this.timeoutMempoolValid[reqValid.status.address] = setTimeout(() => {

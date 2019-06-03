@@ -9,11 +9,11 @@ class MempoolController {
 		this.app = app;
 		this.mempool = mempool;
 		
-		this.requestValidation();
-		this.validateSignature();
+		this.AddRequestValidation();
+		this.validRequest();
 	}
 
-	requestValidation() {
+	AddRequestValidation() {
 		//const self = this;
 		try {
 			this.app.post('/requestValidation', async (req, res) => {
@@ -34,11 +34,11 @@ class MempoolController {
 		}
 	}
 
-	validateSignature() {
+	validRequest() {
 		try {
 			this.app.post('/message-signature/validate', async (req, res) => {
 				if(req.body.address && req.body.signature) {
-					let resJson = await this.mempool.validateRequest(req.body.address, req.body.signature)
+					let resJson = await this.mempool.validateRequestByWallet(req.body.address, req.body.signature)
 					
 					if (resJson) {
 						res.status(200).send(resJson);
