@@ -9,7 +9,6 @@ class VerifyAddressRequest {
 		if(this.addressValid() && this.storyValid()) {
 			return true;
 		} else {
-			console.log("return undefined");
 			return undefined;
 		}
 	}
@@ -37,9 +36,7 @@ class VerifyAddressRequest {
     	}
 
     	// success now encode story to hex-decimal
-    	console.log(`before star = ${star.story}`);
     	star.story = Buffer(star.story).toString('hex');
-    	console.log(`after star = ${star.story}`);
     	return true;
 	}
 

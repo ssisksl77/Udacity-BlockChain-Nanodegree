@@ -7,7 +7,7 @@ class Blockchain {
 	    let res;
 	    try {
 	        let h = await this.getBlockMaxHeight();
-	        console.log('h =',h);
+
 	        block.height = h;
 	        if (block.height > 0) {
 	            let previousBlock = await this.getBlockByHeight(h - 1);
@@ -17,17 +17,13 @@ class Blockchain {
 	        block.hash = SHA256(JSON.stringify(block)).toString();
 	        res = await db.addDataToLevelDB(JSON.stringify(block));
 	    } catch (err) {
-	        console.log("getBlockMaxHeight err");
-	        console.log(block.hash);
-	        console.log(res);
-	        console.log(err);
+	        console.log("getBlockMaxHeight err", block.hash, res, err);
 	    }
 	    return JSON.parse(res);
 	}
 
 	async getBlockMaxHeight() {
-	    const height = await db.getBlockHeight();
-	    return height;
+	    return await db.getBlockHeight();;
 	}
 
 	async getBlockByHeight(height) {
@@ -45,8 +41,7 @@ class Blockchain {
 		try {
 			block = await db.getLevelDBDataByHash(hash);
 		} catch(err) {
-			console.log(err);
-			console.log(block);
+			console.log(block, err);
 		}
 
 		return block;

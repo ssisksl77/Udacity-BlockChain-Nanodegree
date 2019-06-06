@@ -43,7 +43,7 @@ function addDataToLevelDB(value) {
     }).on('error', function (err) {
       reject(err);
     }).on('close', function () {
-      console.log('Block #' + i);
+      //console.log('Block #' + i);
       addLevelDBData(i, value);
       resolve(value);
     });
@@ -65,8 +65,24 @@ function getLevelDBDataByHash(hash) {
   }); 
 }
 
+function getLevelDBDatasByAddress(address) {
+  return new Promise(function (resolve, reject) {
+    let blocks = [];
+      db.createReadStream()
+        .on('data', (data) => {
+          const v = JSON.parse(data.value);
+          if(v.data && v.data.address === address) {
+            blocks.push(JSON.parse(v));
+          }
+        })
+        .on('error', (err) => { reject(err); })
+        .on('close', (err) => { resolve(blocks); });
+  });
+}
+
 module.exports.addLevelDBData = addLevelDBData;
 module.exports.getLevelDBData = getLevelDBData;
 module.exports.getBlockHeight = getBlockHeight;
 module.exports.addDataToLevelDB = addDataToLevelDB;
 module.exports.getLevelDBDataByHash = getLevelDBDataByHash;
+module.exports.getLevelDBDatasByAddress = getLevelDBDatasByAddress;

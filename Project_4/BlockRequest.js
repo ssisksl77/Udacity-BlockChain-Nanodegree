@@ -9,10 +9,7 @@ class BlockRequest {
 		this.validationWindow = validationWindowTimeout;
 	}
 
-	hi() {
-		console.log('hi');
-	}
-	
+
 	renewValidationWindow() {
 		const now = new Date().getTime().toString().slice(0,-3);
 		const timeElapse = now - this.requestTimeStamp;

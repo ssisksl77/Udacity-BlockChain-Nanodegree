@@ -2,7 +2,7 @@ const _ = require('lodash');
 const bitcoinMessage = require('bitcoinjs-message');
 
 const RequestValid = require('./RequestValid.js');
-const RequestValidTimeout = 30*60*1000;
+const RequestValidTimeout = 30 * 1000; //30*60*1000;
 
 class Mempool {
 	constructor() {
@@ -33,8 +33,8 @@ class Mempool {
 				let reqValid = new RequestValid(wallet, verified);
 				if(verified) {
 					this.mempoolValid[reqValid.status.walletAddress] = reqValid;
-					this.timeoutMempoolValid[reqValid.status.address] = setTimeout(() => {
-						self.removeValidRequest(reqValid.status.address);
+					this.timeoutMempoolValid[reqValid.status.walletAddress] = setTimeout(() => {
+						self.removeValidRequest(reqValid.status.walletAddress);
 					}, RequestValidTimeout);
 				}
 				return reqValid;
@@ -71,12 +71,15 @@ class Mempool {
 	setWallet(blockRequest) {
 		const address = blockRequest.walletAddress;
 		let self = this;
-		this.mempool[address] = blockRequest;
-		this.timeoutRequests[address] = setTimeout(function() {
-			console.log("remove it!");
+		self.mempool[address] = blockRequest;
+		self.timeoutRequests[address] = setTimeout(function() {
 			self.removeBlockRequest(address);
 		}, blockRequest.validationWindow * 1000);
 		return;
+	}
+
+	getValidRequest(address) {
+		return this.mempoolValid[address];
 	}
 
 	removeBlockRequest(address) {
