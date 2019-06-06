@@ -106,16 +106,10 @@ class BlockController {
     getBlockByWalletAddress() {
         this.app.get("/stars/address::address", async (req, res) => {
             if(req.params.address) {
-                const address = req.params.addrss;
+                const address = req.params.address;
+                let blocks = await chain.getLevelDBDatasByAddress(address);
 
-                try {
-                    let blocks = await chain.getLevelDBDatasByAddress(address);
-                } catch(err) {
-                  return res.status(500).send('err occured');
-                } 
-                
-
-                if (blocks && block.length > 0) {
+                if (blocks && blocks.length > 0) {
                     return res.json(blocks)
                 } else {
                     return res.status(400).send('no blocks');

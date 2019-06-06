@@ -46,6 +46,16 @@ class Blockchain {
 
 		return block;
 	}
+
+	async getLevelDBDatasByAddress(address) {
+		let blocks;
+		try {
+			blocks = await db.getLevelDBDatasByAddress(address);
+		} catch(err) {
+			console.log(blocks, err);
+		}
+		return blocks;
+	}
 }
 
 module.exports = Blockchain;

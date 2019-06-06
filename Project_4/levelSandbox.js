@@ -17,7 +17,6 @@ function getLevelDBData(key){
   return new Promise(function getLevelDBDataPromise(resolve, reject) {
     db.get(key, function (err, value) {
       if (err) reject(err);
-      //console.log('Value = ' + value);
       resolve(value);
     })
   });
@@ -43,7 +42,6 @@ function addDataToLevelDB(value) {
     }).on('error', function (err) {
       reject(err);
     }).on('close', function () {
-      //console.log('Block #' + i);
       addLevelDBData(i, value);
       resolve(value);
     });
@@ -71,8 +69,9 @@ function getLevelDBDatasByAddress(address) {
       db.createReadStream()
         .on('data', (data) => {
           const v = JSON.parse(data.value);
-          if(v.data && v.data.address === address) {
-            blocks.push(JSON.parse(v));
+
+          if(v.body && v.body.address === address) {
+            blocks.push(v);
           }
         })
         .on('error', (err) => { reject(err); })
